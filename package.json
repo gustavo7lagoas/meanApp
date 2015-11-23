@@ -1,0 +1,14 @@
+{
+  "name": "myapp",
+  "version": "1.0.0",
+  "description": "Gustavo's application",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Gustavo Moreira da Fonseca",
+  "license": "ISC",
+  "dependencies": {
+    "ejs": "^0.8.8"
+  }
+}
