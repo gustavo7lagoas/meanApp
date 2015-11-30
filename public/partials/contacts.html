@@ -4,8 +4,11 @@
 <br>
 <div>
     <button class='btn btn-primary' ng-click='increment()'>New</button>
+    <input ng-model='filter' type='search', placeholder='User name'>
 </div>
-<p>Total users: {{total}}</p>
+<div>
+    <p>Total users: {{total}}</p>
+</div>
 
 <div clas='table-responsive'>
     <table class='table table-hover'>
@@ -14,12 +17,12 @@
             <th>Email</th>
             <th>Action</th>
         </tr>
-        <tr>
+        <tr ng-repeat='contact in contacts | filter : filter'>
             <td>
-                <a>Contact</a>
+                <a>{{contact.name}}</a>
             </td>
             <td>
-                <a>contact@myapp.com</a>
+                <a>{{contact.email}}</a>
             </td>
             <td class='text-center'>
                 <button class='btn btn-warning'>Delete</button>
