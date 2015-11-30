@@ -4,4 +4,4 @@ angular.module('myApp').controller('ContactsController',
         $scope.increment = function() {
             $scope.total++;
         }
-   });
+});
