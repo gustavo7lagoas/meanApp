@@ -29,6 +29,13 @@ module.exports = function() {
         contact ?
             res.json(contact) :
             res.status(404).send('Contact not found');
+    };
+    controller.removeContact = function(req, res) {
+        var contactToBeRemoved = req.params.contactId;
+        contacts = contacts.filter(function(contact) {
+            return contact._id != contactToBeRemoved;
+        });
+        end();
     }
     return controller;
 };
