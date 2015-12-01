@@ -1,14 +1,27 @@
 angular.module('myApp').controller('ContactsController',
-   function($scope, $http) {
+   function($scope, $resource) {
 
         $scope.contacts = [];
         $scope.filter = '';
 
-        $http.get('/contacts')
-        .success(function(data) {
-            $scope.contacts = data;
-        })
-        .error(function(statusText) {
-            console.log(statusText);
-        });
+        $scope.init = function() {
+            allContacts();
+        };
+
+        var Contact = $resource('/contacts');
+
+        function allContacts() {
+
+            Contact.query(
+                function(data) {
+                    $scope.contacts = data;
+                },
+                function(statusText) {
+                    console.log('It was not possible to get the contacts');
+                    console.log(statusText);
+                }
+            );
+
+        };
+        $scope.init();
 });
