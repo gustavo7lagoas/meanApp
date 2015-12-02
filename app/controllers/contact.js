@@ -35,7 +35,7 @@ module.exports = function() {
         contacts = contacts.filter(function(contact) {
             return contact._id != contactToBeRemoved;
         });
-        end();
+        res.status(204).end();
     }
     return controller;
 };

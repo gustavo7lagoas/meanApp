@@ -6,8 +6,14 @@
     <button class='btn btn-primary' ng-click='increment()'>New</button>
     <input ng-model='filter' type='search', placeholder='User name'>
 </div>
+<div ng-show='message.text'>
+    {{message.error}}
+</div>
 <div>
-    <p>Total users: {{contacts.length}}</p>
+    <p ng-show='contacts.length'>Total users: {{contacts.length}}</p>
+    <p class='text-info' ng-hide='contacts.length'>
+        There are no contacts registered
+    </p>
 </div>
 
 <div clas='table-responsive'>
@@ -25,7 +31,7 @@
                 <a>{{contact.email}}</a>
             </td>
             <td class='text-center'>
-                <button class='btn btn-warning'>Delete</button>
+                <button ng-click='remove(contact)' class='btn btn-warning'>Delete</button>
             </td>
         </tr>
     </table>

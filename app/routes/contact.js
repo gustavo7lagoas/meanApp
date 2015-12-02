@@ -1,7 +1,11 @@
 module.exports = function(app) {
     var controller = app.controllers.contact;
-    app.get('/contacts', controller.listContacts);
-    app.get('/contacts/:contactId', controller.getContact);
 
-    app.delete('/contacts/:contactId', controller.removeContact);
+    app.route('/contacts').
+        get(controller.listContacts);
+
+    app.route('/contacts/:contactId').
+        get(controller.getContact).
+        delete(controller.removeContact);
+
 };
