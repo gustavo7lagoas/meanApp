@@ -20,7 +20,7 @@ angular.module('myApp').controller('ContactsController',
                 },
                 function(statusText) {
                     $scope.message = {
-                        text : 'It was not possible to get the contacts';
+                        text : 'It was not possible to get the contacts'
                     }
                     console.log(statusText);
                 }
@@ -35,7 +35,7 @@ angular.module('myApp').controller('ContactsController',
                 allContacts,
                 function(error) {
                     $scope.messagesage = {
-                        text : 'Could not remove the contact';
+                        text : 'Could not remove the contact'
                     }
                     console.log(error);
                 }
