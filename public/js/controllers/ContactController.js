@@ -1,10 +1,11 @@
 angular.module('myApp').controller('ContactController',
     function($scope, $routeParams, $resource) {
 
-        $scope.contact = {};
-        $scope.message = {};
-
         var Contact = $resource('contacts/:contactId');
+
+        $scope.contact = new Contact();
+        $scope.message = {};
+        $scope.saveContact = saveContact;
 
         function getContact(contact) {
             Contact.get({contactId : $routeParams.contactId},
@@ -20,6 +21,23 @@ angular.module('myApp').controller('ContactController',
             )
         };
 
-        getContact();
+        function saveContact() {
+            $scope.contact.$save().
+                then(function(data) {
+                    console.log('Contact saved successfully');
+                    $scope.message = {
+                        'text' : 'Contact saved successfully'
+                    }
+                    // Clean form
+                    $scope.contact = new Contact();
+                })
+                .catch(function(error) {
+                    $scope.message = {'text' : 'Could not save the contact'};
+                });
+        };
+
+        if($routeParams.contactId) {
+            getContact();
+        };
 
 });

@@ -17,7 +17,10 @@ var contacts = [
 ]
 
 module.exports = function() {
+
     var controller = {};
+        userIdCounter = 3;
+
     controller.listContacts = function(req, res) {
         res.json(contacts);
     };
@@ -36,6 +39,30 @@ module.exports = function() {
             return contact._id != contactToBeRemoved;
         });
         res.status(204).end();
-    }
+    };
+    controller.saveContact = function(req, res) {
+        var contact;
+        if(req.body._id) {
+            contact = updateContact(req.body);
+        } else {
+            contact = saveNewContact(req.body);
+        }
+        res.json(contact);
+    };
+
+    function saveNewContact(contact) {
+        userIdCounter ++;
+        contact._id = userIdCounter;
+        contacts.push(contact);
+        return contact;
+    };
+
+    function updateContact(contact) {
+        contacts = contacts.filter(function(el) {
+            return el._id == contact._id;
+        });
+        contacts.push(contact);
+        return contact;
+    };
     return controller;
 };
