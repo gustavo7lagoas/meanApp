@@ -1,7 +1,5 @@
 angular.module('myApp').controller('ContactController',
-    function($scope, $routeParams, $resource) {
-
-        var Contact = $resource('contacts/:contactId');
+    function($scope, $routeParams, Contact) {
 
         $scope.contact = new Contact();
         $scope.message = {};

@@ -1,5 +1,5 @@
 angular.module('myApp').controller('ContactsController',
-   function($scope, $resource) {
+   function(Contact, $scope) {
 
         $scope.contacts = [];
         $scope.filter = '';
@@ -8,8 +8,6 @@ angular.module('myApp').controller('ContactsController',
         $scope.init = function() {
             allContacts();
         };
-
-        var Contact = $resource('/contacts/:contactId');
 
         function allContacts() {
 
