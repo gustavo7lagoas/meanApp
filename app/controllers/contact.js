@@ -1,68 +1,72 @@
-var contacts = [
-    {
-        _id : 1,
-        name : "First contact",
-        email : "first@mail.com"
-    },
-    {
-        _id : 2,
-        name : "Second contact",
-        email : "second@mail.com"
-    },
-    {
-        _id : 3,
-        name : "Third contact",
-        email : "third@mail.com"
-    }
-]
-
-module.exports = function() {
+module.exports = function(app) {
 
     var controller = {};
-        userIdCounter = 3;
+    var Contact = app.models.contact;
 
     controller.listContacts = function(req, res) {
-        res.json(contacts);
+        Contact.find().exec().
+            then(function(data) {
+                res.json(data);
+            },
+            function(error) {
+                console.log(error);
+                res.send(500).json(error);
+            });
     };
+
     controller.getContact = function(req, res) {
         var param = req.params.contactId;
-        contact = contacts.filter(function(contact) {
-            return contact['_id'] == param;
-        })[0];
-        contact ?
-            res.json(contact) :
-            res.status(404).send('Contact not found');
+        Contact.findById(param).exec().
+            then(function(data) {
+                console.log(data);
+                if(data) {
+                    res.json(data);
+                } else {
+                    res.status(404).send('Contact not found');
+                }
+            },
+            function(error) {
+                console.log(error);
+                res.send(500).json(error);
+            })
     };
+
     controller.removeContact = function(req, res) {
-        var contactToBeRemoved = req.params.contactId;
-        contacts = contacts.filter(function(contact) {
-            return contact._id != contactToBeRemoved;
-        });
-        res.status(204).end();
+        var _id = req.params.contactId;
+        Contact.remove({'_id' : _id}).exec().
+            then(function() {
+                res.status(204).end();
+            },
+            function(error) {
+                console.log(error);
+                res.send(500).json(error);
+            });
     };
+
     controller.saveContact = function(req, res) {
         var contact;
-        if(req.body._id) {
-            contact = updateContact(req.body);
+        var _id = req.body._id;
+
+        if(_id) {
+            Contact.findAndUpdate(_id, req.body).exec().
+                then(function(contact) {
+                    res.json(contact);
+                },
+                function(error) {
+                    console.log(error);
+                    res.status(500).json(error);
+                });
         } else {
-            contact = saveNewContact(req.body);
+            Contact.create(req.body).
+                then(function(contact) {
+                    res.send(201).json(contact);
+                },
+                function(error) {
+                    console.log(error);
+                    res.send(500).json(error);
+                });
         }
-        res.json(contact);
     };
 
-    function saveNewContact(contact) {
-        userIdCounter ++;
-        contact._id = userIdCounter;
-        contacts.push(contact);
-        return contact;
-    };
-
-    function updateContact(contact) {
-        contacts = contacts.filter(function(el) {
-            return el._id == contact._id;
-        });
-        contacts.push(contact);
-        return contact;
-    };
     return controller;
 };
