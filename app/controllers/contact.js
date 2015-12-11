@@ -4,7 +4,7 @@ module.exports = function(app) {
     var Contact = app.models.contact;
 
     controller.listContacts = function(req, res) {
-        Contact.find().exec().
+        Contact.find().populate('emergency').exec().
             then(function(data) {
                 res.json(data);
             },
@@ -48,7 +48,7 @@ module.exports = function(app) {
         var _id = req.body._id;
 
         if(_id) {
-            Contact.findAndUpdate(_id, req.body).exec().
+            Contact.findByIdAndUpdate(_id, req.body).exec().
                 then(function(contact) {
                     res.json(contact);
                 },

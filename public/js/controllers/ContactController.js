@@ -38,4 +38,8 @@ angular.module('myApp').controller('ContactController',
             getContact();
         };
 
+        Contact.query(function(contacts) {
+            $scope.contacts = contacts;
+        });
+
 });

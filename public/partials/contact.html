@@ -19,6 +19,15 @@
             placeholder='user@mail.com'>
         </div>
     </div>
+    <div class='form-group'>
+        <label for='emergency'>Emergency</label>
+        <select id='Emergency'
+            class='form-control'
+            ng-model = 'contact.emergency'
+            ng-options='
+            contact._id as contact.name for contact in contacts'>
+        </select>
+    </div>
     <div>
         <button type='submit' class='btn btn-primary'>Save</button>
         <a href='#/' class='btn btn-default'>Back</a>

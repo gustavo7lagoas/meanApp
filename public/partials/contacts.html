@@ -21,6 +21,7 @@
         <tr>
             <th>Name</th>
             <th>Email</th>
+            <th>Emergency</th>
             <th>Action</th>
         </tr>
         <tr ng-repeat='contact in contacts | filter : filter'>
@@ -29,6 +30,9 @@
             </td>
             <td>
                 <a>{{contact.email}}</a>
+            </td>
+            <td>
+                <a>{{contact.emergency.email}}</a>
             </td>
             <td class='text-center'>
                 <button ng-click='remove(contact)' class='btn btn-warning'>Delete</button>
