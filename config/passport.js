@@ -21,5 +21,16 @@ module.exports = function() {
             }
         );
     }));
+
+    passport.serializeUser(function(user, done) {
+        done(null, user._id);
+    });
+
+    passport.deserializeUser(function(id, done) {
+        User.findById(id).exec().
+            then(function(user) {
+                done(null, user);
+            });
+    });
 };
 
