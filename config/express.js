@@ -10,16 +10,16 @@ var passport = require('passport');
 module.exports = function() {
     var app = express();
 
+    // Environment variables
+    app.set('port', 3000);
+    app.set('view engine', 'ejs');
+    app.set('views', './app/views');
+
     // Middlewares
     app.use(express.static('./public'));
     app.use(bodyParser.urlencoded({extended : true}));
     app.use(bodyParser.json());
     app.use(require('method-override')());
-
-    // Environment variables
-    app.set('port', 3000);
-    app.set('view engine', 'ejs');
-    app.set('views', './app/views');
 
     // Authentication stuff
     app.use(cookieParser());
@@ -30,10 +30,13 @@ module.exports = function() {
             saveUninitialized : true
         }
     ));
+    app.use(passport.initialize());
+    app.use(passport.session());
 
     // Routes
     load('models', {cwd: 'app'})
         .then('controllers')
+        .then('routes/auth.js')
         .then('routes')
         .into(app)
 
